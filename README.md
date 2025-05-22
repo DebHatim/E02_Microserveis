@@ -30,7 +30,7 @@ http://localhost/?data=2025-05-19
 http://localhost/api/usuari o /api/localitzacio - /api/espectacle - /api/seient - /api/entrada - /api/compra
 
 # ###################
-# CONSULTAR AMB GET
+# CONSULTAR AMB GETAA
 # ###################
 
 ## USUARI
