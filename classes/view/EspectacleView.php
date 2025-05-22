@@ -12,7 +12,7 @@ class EspectacleView {
             $entradaXml->addChild('data', $espectacle->getHoraInici()->format('Y-m-d'));
         }
 
-        header('Content-type: text/xml');
+        header('Content-type: application/xml');
         echo $xml->asXML();
     }
 

@@ -2,18 +2,23 @@
 
 class EntradaController {
 
-    public static function mostra($ref = null): void
+    public static function mostraPDF($ref = null): void
     {
         if (strlen(trim($ref)) == 15) {
-
-            $on = new ON_Entrada($ref);
-
-            if (PDFModel::checkRef($on)) {
-                PDFView::show(PDFModel::findByRef($on));
+            try {
+                $DB_Entrada = EntradaModel::findOneByRef($ref);
+                if ($DB_Entrada === null) {
+                    http_response_code(404);
+                    echo "Error: codi de referencia inexistent.";
+                }
+                EntradaView::mostraPDF($DB_Entrada);
+            } catch (Exception $e) {
+                http_response_code(404);
+                echo json_encode(['Error' => $e->getMessage()]);
             }
-            else {
-                PDFView::show(null);
-            }
+        }
+        else {
+            http_response_code(400);
         }
     }
 

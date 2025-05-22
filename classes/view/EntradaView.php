@@ -1,16 +1,20 @@
-<?php 
+<?php
 
 use Mpdf\Mpdf;
 use Hatim\Entradas\Entity\Entrada;
+use Mpdf\MpdfException;
 
-class PDFView {
+class EntradaView {
 
-    public static function show($entrada = null) {
+    /**
+     * @throws MpdfException
+     */
+    public static function mostraPDF($entrada = null): void
+    {
 
         if ($entrada instanceof Entrada) {
 
-            // Aixó serveix per posar la url correctament al codi QR
-
+            // Això serveix per posar l'URL correctament al codi QR
             if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
                 $link = "https";
             else
@@ -29,7 +33,7 @@ class PDFView {
             $horafinal = explode(" ", $entrada->getEspectacle()->getHoraFinal()->format('d/m/Y H:i'))[1];
             $lloc = $entrada->getEspectacle()->getLocalitzacio()->getNom();
             $preu = $entrada->getPreu();
-            $preu = number_format((float)$preu, 2, '.', ''); // mostrar 2 decimals
+            $preu = number_format($preu, 2, '.', ''); // mostrar 2 decimals
             $tipus = $entrada->getSeient()->getTipus();
             $fila = $entrada->getSeient()->getFila();
             $seient = $entrada->getSeient()->getNumero();
@@ -54,7 +58,5 @@ class PDFView {
         }
 
     }
-    
-}
 
-?>
+}

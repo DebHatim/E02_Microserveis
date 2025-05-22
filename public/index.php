@@ -1,16 +1,12 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-
 const __ROOT__ = __DIR__ . "/../";
 
 require_once __ROOT__ . '/src/bootstrap.php';
 require_once __ROOT__ . '/vendor/autoload.php';
+require_once __ROOT__ . '/classes/core/Autoload.php';
 
 session_start();
-
-require_once __ROOT__ . '/classes/core/Autoload.php';
 Autoload::load();
 
 try {
@@ -29,21 +25,68 @@ try {
                     if (array_keys($_GET)[0] == "data") {
                         EspectacleController::mostra($_GET["data"]);
                     } else if (array_keys($_GET)[0] == "ref") {
-                        EntradaController::mostra($_GET["ref"]);
+                        EntradaController::mostraPDF($_GET["ref"]);
                     }
-                } else {
+                }
+                else {
                     EspectacleController::mostra();
                     break;
                 }
             }
             else {
-                if ($path == "api/usuari") {
-                    UsuariController::mostraTots($_GET["data"]);
-                }
-                else if (str_contains($path, "api/usuari/")) {
-                    if (isset($_GET["id"])) {
-                        UsuariController::mostraUnic($_GET["id"]);
-                    }
+                $divisio = explode("/", $path);
+                $solicitud = $divisio[1] ?? null;
+                $id = $divisio[2] ?? null;
+
+                switch ($solicitud) {
+                    case "usuari":
+                        if ($id) {
+                            UsuariController::mostraUnic($id);
+                        }
+                        else {
+                            UsuariController::mostraTots();
+                        }
+                        break;
+                    case "localitzacio":
+                        if ($id) {
+                            LocalitzacioController::mostraUnic($id);
+                        }
+                        else {
+                            LocalitzacioController::mostraTots();
+                        }
+                        break;
+                    case "espectacle":
+                        if ($id) {
+                            EspectacleController::mostraUnic($id);
+                        }
+                        else {
+                            EspectacleController::mostraTots();
+                        }
+                        break;
+                    case "seient":
+                        if ($id) {
+                            SeientController::mostraUnic($id);
+                        }
+                        else {
+                            SeientController::mostraTots();
+                        }
+                        break;
+                    case "entrada":
+                        if ($id) {
+                            EntradaController::mostraUnic($id);
+                        }
+                        else {
+                            EntradaController::mostraTots();
+                        }
+                        break;
+                    case "compra":
+                        if ($id) {
+                            CompraController::mostraUnic($id);
+                        }
+                        else {
+                            CompraController::mostraTots();
+                        }
+                        break;
                 }
             }
             break;
