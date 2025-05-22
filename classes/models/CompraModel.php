@@ -53,5 +53,16 @@ class CompraModel {
         $em->flush();
     }
 
+    public static function findAll(): array
+    {
+        global $em;
+        return $em->getRepository(Compra::class)->findAll();
+    }
+
+    public static function find(int $id): ?Compra
+    {
+        global $em;
+        return $em->getRepository(Compra::class)->find($id);
+    }
 
 }

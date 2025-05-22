@@ -47,7 +47,6 @@ class UsuariModel {
         global $em;
         return $em->getRepository(Usuari::class)->findOneBy(['email' => $email]);
     }
-
     public static function findAll(): array
     {
         global $em;

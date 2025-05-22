@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 const __ROOT__ = __DIR__ . "/../";
 
 require_once __ROOT__ . '/src/bootstrap.php';
@@ -23,7 +25,7 @@ try {
                 }
                 else if (count($_GET) == 1) {
                     if (array_keys($_GET)[0] == "data") {
-                        EspectacleController::mostra($_GET["data"]);
+                        EspectacleController::mostraData($_GET["data"]);
                     } else if (array_keys($_GET)[0] == "ref") {
                         EntradaController::mostraPDF($_GET["ref"]);
                     }
@@ -87,6 +89,10 @@ try {
                             CompraController::mostraTots();
                         }
                         break;
+                    default:
+                        http_response_code(400);
+                        echo "Error. Sense parametres.";
+                        exit;
                 }
             }
             break;

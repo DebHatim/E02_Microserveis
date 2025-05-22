@@ -92,8 +92,18 @@ $em->persist($entrada03);
 
 $usuari01 = new Usuari();
 $usuari01->setNom("Hatim");
-$usuari01->setEmail('thos.debboun.hatim@gmail.com');
+$usuari01->setEmail('hatim1@gmail.com');
 $em->persist($usuari01);
+
+$usuari02 = new Usuari();
+$usuari02->setNom("Hatim2");
+$usuari02->setEmail('hatim2@gmail.com');
+$em->persist($usuari02);
+
+$usuari03 = new Usuari();
+$usuari03->setNom("Hatim3");
+$usuari03->setEmail('hatim3@gmail.com');
+$em->persist($usuari03);
 
 $compra01 = new Compra();
 $compra01->setUsuari($usuari01);
@@ -104,5 +114,3 @@ $em->persist($compra01);
 $entrada01->setEstat("Venuda");
 
 $em->flush();
-
-?>

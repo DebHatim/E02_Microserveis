@@ -2,6 +2,26 @@
 
 class LocalitzacioController {
 
+    public static function mostraTots(): void
+    {
+        try {
+            PeticioGETView::mostra(LocalitzacioModel::findAll());
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'han trobat localitzacions."]);
+        }
+    }
+
+    public static function mostraUnic($id): void
+    {
+        try {
+            PeticioGETView::mostra(LocalitzacioModel::find($id));
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'ha trobat cap localitzacio amb aquest id."]);
+        }
+    }
+
     public static function crea($data = null) {
         try {
             $on = new ON_Localitzacio($data["nom"], $data["direccio"], $data["ciutat"], $data["capacitat"]);

@@ -7,11 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Hatim\Entradas\Repository\EspectacleRepository;
-
 #[ORM\Entity(repositoryClass:EspectacleRepository::class)]
 #[ORM\Table(name: 'Espectacle')]
 
-class Espectacle {
+class Espectacle implements \JSONSerializable {
     
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -111,7 +110,16 @@ class Espectacle {
     {
         $this->localitzacio = $localitzacio;
     }
+    public function jsonSerialize() : array
+    {
+        return [
+            'id'          => $this->id,
+            'nom'         => $this->nom,
+            'poster'       => $this->poster,
+            'horaInici'     => $this->horaInici->format('Y-m-d H:i:s'),
+            'horaFinal' => $this->horaFinal->format('Y-m-d H:i:s'),
+            'localitzacio' => $this->localitzacio->getNom()
+        ];
+    }
 
 }
-
-?>

@@ -103,7 +103,7 @@ class Usuari implements \JSONSerializable {
             'id'          => $this->id,
             'nom'         => $this->nom,
             'email'       => $this->email,
-            'telefon'     => $this->telefon,
+            'telefon'     => $this->telefon ?? null,
             'dataCreacio' => $this->dataCreacio->format('Y-m-d'),
         ];
     }

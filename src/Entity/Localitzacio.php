@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Table(name: 'Localitzacio')]
 
-class Localitzacio {
+class Localitzacio implements \JSONSerializable {
 
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -75,7 +75,15 @@ class Localitzacio {
     {
         $this->capacitat = $capacitat;
     }
+    public function jsonSerialize() : array
+    {
+        return [
+            'id'          => $this->id,
+            'nom'         => $this->nom,
+            'direccio'       => $this->direccio,
+            'ciutat'     => $this->ciutat,
+            'capacitat' => $this->capacitat,
+        ];
+    }
 
 }
-
-?>

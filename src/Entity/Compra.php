@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Table(name: 'Compra')]
 
-class Compra {
+class Compra implements \JSONSerializable {
     
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -114,5 +114,15 @@ class Compra {
         }
     }
 
-}
+    public function jsonSerialize() : array
+    {
+        return [
+            'id'          => $this->id,
+            'dataCompra'         => $this->dataCompra->format('d/m/Y'),
+            'metodePagament'       => $this->metodePagament,
+            'total'     => $this->total,
+            'usuari' => $this->usuari->getEmail(),
+        ];
+    }
 
+}

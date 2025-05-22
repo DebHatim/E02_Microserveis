@@ -2,6 +2,25 @@
 
 class EntradaController {
 
+    public static function mostraTots(): void
+    {
+        try {
+            PeticioGETView::mostra(EntradaModel::findAll());
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'han trobat entrades."]);
+        }
+    }
+
+    public static function mostraUnic($id): void
+    {
+        try {
+            PeticioGETView::mostra(EntradaModel::find($id));
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'ha trobat cap entrada amb aquest id."]);
+        }
+    }
     public static function mostraPDF($ref = null): void
     {
         if (strlen(trim($ref)) == 15) {
@@ -26,7 +45,7 @@ class EntradaController {
     {
         try {
             $DB_Espectacle = EspectacleModel::findByNom($data["espectacle"]);
-            $DB_Seient = SeientModel::findOneById($data["seient"]);
+            $DB_Seient = SeientModel::find($data["seient"]);
             EntradaModel::crea(new ON_Entrada($data["ref"], $data["preu"], $DB_Espectacle, $DB_Seient, $data["estat"]));
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada creada']);
@@ -40,7 +59,7 @@ class EntradaController {
     {
         try {
             $DB_Espectacle = EspectacleModel::findByNom($data["espectacle"]);
-            $DB_Seient = SeientModel::findOneById($data["seient_id"]);
+            $DB_Seient = SeientModel::find($data["seient_id"]);
             EntradaModel::actualitza(new ON_Entrada($data["ref"], $data["preu"], $DB_Espectacle, $DB_Seient, $data["estat"], $data["id"]));
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada actualitzada']);

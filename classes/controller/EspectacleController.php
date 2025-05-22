@@ -3,7 +3,26 @@
 class EspectacleController
 {
 
-    public static function mostra($data = null)
+    public static function mostraTots(): void
+    {
+        try {
+            PeticioGETView::mostra(EspectacleModel::findAll());
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'han trobat espectacles."]);
+        }
+    }
+
+    public static function mostraUnic($id): void
+    {
+        try {
+            PeticioGETView::mostra(EspectacleModel::find($id));
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'ha trobat cap espectacle amb aquest id."]);
+        }
+    }
+    public static function mostraData($data = null)
     {
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data ?? '')) {
             http_response_code(400);

@@ -56,4 +56,16 @@ class LocalitzacioModel {
         return $em->getRepository(Localitzacio::class)->findOneBy(['nom' => $nom]);
     }
 
+    public static function findAll(): array
+    {
+        global $em;
+        return $em->getRepository(Localitzacio::class)->findAll();
+    }
+
+    public static function find(int $id): ?Localitzacio
+    {
+        global $em;
+        return $em->getRepository(Localitzacio::class)->find($id);
+    }
+
 }

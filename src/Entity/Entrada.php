@@ -9,7 +9,7 @@ use Hatim\Entradas\Repository\EntradaRepository;
 #[ORM\Entity(repositoryClass:EntradaRepository::class)]
 #[ORM\Table(name: 'Entrada')]
 
-class Entrada {
+class Entrada implements \JSONSerializable {
     
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -106,6 +106,17 @@ class Entrada {
         $this->compra = $compra;
     }
 
-
+    public function jsonSerialize() : array
+    {
+        return [
+            'id'          => $this->id,
+            'ref'         => $this->ref,
+            'estat'       => $this->estat,
+            'preu'     => $this->preu,
+            'espectacle' => $this->espectacle->getNom(),
+            'seient_id' => $this->seient->getId(),
+            'compra_id' => $this->compra?->getId(),
+        ];
+    }
 
 }

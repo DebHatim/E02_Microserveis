@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 #[ORM\Entity]
 #[ORM\Table(name: 'Seient')]
 
-class Seient {
+class Seient implements \JSONSerializable {
 
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -77,6 +77,17 @@ class Seient {
     public function setLocalitzacio(Localitzacio $localitzacio): void
     {
         $this->localitzacio = $localitzacio;
+    }
+
+    public function jsonSerialize() : array
+    {
+        return [
+            'id'          => $this->id,
+            'fila'         => $this->fila,
+            'numero'       => $this->numero,
+            'tipus'     => $this->tipus,
+            'localitzacio' => $this->localitzacio->getNom(),
+        ];
     }
 
 }

@@ -59,7 +59,14 @@ class SeientModel {
         $em->flush();
     }
 
-    public static function findOneById($id) {
+    public static function findAll(): array
+    {
+        global $em;
+        return $em->getRepository(Seient::class)->findAll();
+    }
+
+    public static function find(int $id): ?Seient
+    {
         global $em;
         return $em->getRepository(Seient::class)->find($id);
     }

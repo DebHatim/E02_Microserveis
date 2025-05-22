@@ -69,4 +69,16 @@ class EspectacleModel {
         return $em->getRepository(Espectacle::class)->findOneBy(['nom' => $nom]);
     }
 
+    public static function findAll(): array
+    {
+        global $em;
+        return $em->getRepository(Espectacle::class)->findAll();
+    }
+
+    public static function find(int $id): ?Espectacle
+    {
+        global $em;
+        return $em->getRepository(Espectacle::class)->find($id);
+    }
+
 }

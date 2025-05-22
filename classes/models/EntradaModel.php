@@ -61,10 +61,21 @@ class EntradaModel {
             $em->flush();
         }
     }
-
     public static function findOneByRef($ref) {
         global $em;
         return $em->getRepository(Entrada::class)->findOneBy(['ref' => $ref]);
+    }
+
+    public static function findAll(): array
+    {
+        global $em;
+        return $em->getRepository(Entrada::class)->findAll();
+    }
+
+    public static function find(int $id): ?Entrada
+    {
+        global $em;
+        return $em->getRepository(Entrada::class)->find($id);
     }
 
 }

@@ -4,12 +4,22 @@ class UsuariController {
 
     public static function mostraTots(): void
     {
-        UsuariView::mostra(UsuariModel::findAll());
+        try {
+            PeticioGETView::mostra(UsuariModel::findAll());
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'han trobat usuaris."]);
+        }
     }
 
     public static function mostraUnic($id): void
     {
-        UsuariView::mostra(UsuariModel::find($id));
+        try {
+            PeticioGETView::mostra(UsuariModel::find($id));
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'ha trobat cap usuari amb aquest id."]);
+        }
     }
 
     public static function crea($data): void

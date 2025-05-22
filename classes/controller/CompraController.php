@@ -2,6 +2,26 @@
 
 class CompraController {
 
+    public static function mostraTots(): void
+    {
+        try {
+            PeticioGETView::mostra(CompraModel::findAll());
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'han trobat compres."]);
+        }
+    }
+
+    public static function mostraUnic($id): void
+    {
+        try {
+            PeticioGETView::mostra(CompraModel::find($id));
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['Error' => "No s'ha trobat cap compra amb aquest id."]);
+        }
+    }
+
     public static function crea($data): void
     {
 
