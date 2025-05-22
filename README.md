@@ -35,44 +35,44 @@ http://localhost/api/usuari o /api/localitzacio - /api/espectacle - /api/seient 
 
 ## USUARI
 
-# Consultar tots els usuaris: 
+### Consultar tots els usuaris: 
 http://localhost/api/usuari
-# Consultar usuari amb id:
+### Consultar usuari amb id:
 http://localhost/api/usuari/1
 
 ## LOCALITZACIO
 
-# Consultar totes les localitzacions:
+### Consultar totes les localitzacions:
 http://localhost/api/localitzacio
-# Consultar localitzacio amb id:
+### Consultar localitzacio amb id:
 http://localhost/api/localitzacio/1
 
 ## ESPECTACLE
 
-# Consultar tots els espectacles:
+### Consultar tots els espectacles:
 http://localhost/api/espectacle
-# Consultar espectacle amb id:
+### Consultar espectacle amb id:
 http://localhost/api/espectacle/1
 
 ## SEIENT
 
-# Consultar tots els seients:
+### Consultar tots els seients:
 http://localhost/api/seient
-# Consultar seient amb id:
+### Consultar seient amb id:
 http://localhost/api/seient/1
 
 ## ENTRADA
 
-# Consultar totes les entrades:
+### Consultar totes les entrades:
 http://localhost/api/entrada
-# Consultar entrada amb id:
+### Consultar entrada amb id:
 http://localhost/api/entrada/1
 
 ## COMPRA
 
-# Consultar totes les compres:
+### Consultar totes les compres:
 http://localhost/api/compra
-# Consultar compres amb id:
+### Consultar compres amb id:
 http://localhost/api/compra/1
 
 # ###################

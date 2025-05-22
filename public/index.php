@@ -14,27 +14,37 @@ require_once __ROOT__ . '/classes/core/Autoload.php';
 Autoload::load();
 
 try {
-    $arr = explode("/", $_SERVER['REQUEST_URI']);
-    $path = $arr[count($arr) - 2] . "/" . $arr[count($arr) - 1];
+    $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = trim(str_replace('/uf4/E02_Microserveis/public/', '', $uri), '/');
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case "GET":
-            http_response_code(400);
-            echo json_encode(['path' => $path]);
-
-            if (count($_GET) == 0) {
-                http_response_code(400);
-                echo "Error. Sense paràmetres.";
-                exit;
-            } else if (count($_GET) == 1) {
-                if (array_keys($_GET)[0] == "data") {
-                    EspectacleController::mostra($_GET["data"]);
-                } else if (array_keys($_GET)[0] == "ref") {
-                    EntradaController::mostra($_GET["ref"]);
+            if (empty($path)) {
+                if (count($_GET) == 0) {
+                    http_response_code(400);
+                    echo "Error. Sense paràmetres.";
+                    exit;
                 }
-            } else {
-                EspectacleController::mostra();
-                break;
+                else if (count($_GET) == 1) {
+                    if (array_keys($_GET)[0] == "data") {
+                        EspectacleController::mostra($_GET["data"]);
+                    } else if (array_keys($_GET)[0] == "ref") {
+                        EntradaController::mostra($_GET["ref"]);
+                    }
+                } else {
+                    EspectacleController::mostra();
+                    break;
+                }
+            }
+            else {
+                if ($path == "api/usuari") {
+                    UsuariController::mostraTots($_GET["data"]);
+                }
+                else if (str_contains($path, "api/usuari/")) {
+                    if (isset($_GET["id"])) {
+                        UsuariController::mostraUnic($_GET["id"]);
+                    }
+                }
             }
             break;
         case "POST":
