@@ -97,7 +97,7 @@ class Usuari implements \JSONSerializable {
         $this->compres = $compres;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : array
     {
         return [
             'id'          => $this->id,

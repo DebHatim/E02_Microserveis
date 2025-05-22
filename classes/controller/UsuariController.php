@@ -2,6 +2,16 @@
 
 class UsuariController {
 
+    public static function mostraTots(): void
+    {
+        UsuariView::mostra(UsuariModel::findAll());
+    }
+
+    public static function mostraUnic($id): void
+    {
+        UsuariView::mostra(UsuariModel::find($id));
+    }
+
     public static function crea($data): void
     {
         try {
