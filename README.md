@@ -1,20 +1,91 @@
-# CREAR USUARI PER POST
+# Arrancar projecte:
+1. Crear base de dades E01_DebbounHatim_Entrada.
 
-# url
+CREATE DATABASE if not exists E01_DebbounHatim_Entrada;
+
+2. Crear usuari usr_generic amb contrassenya 2025@Thos i donarli permisos per la base de dades
+
+CREATE USER 'usr_generic'@'localhost' IDENTIFIED BY '2025@Thos';
+GRANT ALL PRIVILEGES ON `E01\_DebbounHatim\_Entrada`.* TO 'usr_generic'@'localhost';
+
+3. A la terminal, executar: php bin/doctrine.php orm:schema-tool:create
+
+4. Insertar per terminal: php src/Fixture/insert_inicial.php
+
+# ###################
+# PETICIO PDF
+# ###################
+
+http://localhost/?ref=123456789123456
+
+# ###################
+# PETICIO DATA
+# ###################
+
+http://localhost/?data=2025-05-19
+
+# ###################
+# URL CRUD
+# ###################
+http://localhost/api/usuari o /api/localitzacio - /api/espectacle - /api/seient - /api/entrada - /api/compra
+
+# ###################
+# CONSULTAR AMB GET
+# ###################
+
+## USUARI
+
+# Consultar tots els usuaris: 
 http://localhost/api/usuari
+# Consultar usuari amb id:
+http://localhost/api/usuari/1
 
-# estructura
+## LOCALITZACIO
+
+# Consultar totes les localitzacions:
+http://localhost/api/localitzacio
+# Consultar localitzacio amb id:
+http://localhost/api/localitzacio/1
+
+## ESPECTACLE
+
+# Consultar tots els espectacles:
+http://localhost/api/espectacle
+# Consultar espectacle amb id:
+http://localhost/api/espectacle/1
+
+## SEIENT
+
+# Consultar tots els seients:
+http://localhost/api/seient
+# Consultar seient amb id:
+http://localhost/api/seient/1
+
+## ENTRADA
+
+# Consultar totes les entrades:
+http://localhost/api/entrada
+# Consultar entrada amb id:
+http://localhost/api/entrada/1
+
+## COMPRA
+
+# Consultar totes les compres:
+http://localhost/api/compra
+# Consultar compres amb id:
+http://localhost/api/compra/1
+
+# ###################
+# CREAR PER POST
+# ###################
+
+## estructura usuari
 {
 "nom": "jaime",
 "email": "jaime@gmail.com"
 }
 
-# CREAR LOCALITZACIO PER POST
-
-# url
-http://localhost/api/localitzacio
-
-# estructura
+## estructura localitzacio
 {
 "nom": "Lloc",
 "direccio": "Omplir direccio",
@@ -22,12 +93,7 @@ http://localhost/api/localitzacio
 "capacitat": 300
 }
 
-# CREAR ESPECTACLE PER POST
-
-# url
-http://localhost/api/espectacle
-
-# estructura
+## estructura espectacle
 {
 "nom": "NOM EXEMPLE",
 "poster": "https://cdn-p.smehost.net/sites/a8928da38df6414aae98564041b07ae0/wp-content/uploads/2024/10/image-31.png",
@@ -36,12 +102,7 @@ http://localhost/api/espectacle
 "localitzacio": "Lloc"
 }
 
-# CREAR SEIENT PER POST
-
-# url
-http://localhost/api/seient
-
-# estructura
+## estructura seient
 {
 "numero": 4,
 "fila": 1,
@@ -49,12 +110,7 @@ http://localhost/api/seient
 "localitzacio": "Lloc"
 }
 
-# CREAR ENTRADA PER POST
-
-# url
-http://localhost/api/entrada
-
-# estructura
+## estructura entrada
 {
 "ref": "123412341234123",
 "preu": 90.00,
@@ -63,84 +119,52 @@ http://localhost/api/entrada
 "estat": "Disponible"
 }
 
-# CREAR COMPRA PER POST
-
-# url
-http://localhost/api/compra
-
-# estructura
+## estructura compra
 {
 "usuari": "jaime.com",
 "metodepagament": "Yen",
 "ref": "123412341234123"
 }
 
-# ELIMINAR USUARI PER DELETE
+# ###################
+# ELIMINAR PER DELETE
+# ###################
 
-# url
-http://localhost/api/usuari
-
-# estructura
+## estructura usuari
 {
 "email": "jaime@gmail.com"
 }
 
-# ELIMINAR LOCALITZACIO PER DELETE
-
-# url
-http://localhost/api/localitzacio
-
-# estructura
+## estructura localitzacio
 {
 "nom": "Mercadona"
 }
 
-# ELIMINAR ESPECTACLE PER DELETE
-
-# url
-http://localhost/api/espectacle
-
-# estructura
+## estructura espectacle
 {
 "nom": "The Ruby Experience"
 }
 
-# ELIMINAR SEIENT PER DELETE
-
-# url
-http://localhost/api/seient
-
-# estructura
+## estructura seient
 {
 "id": 2
 }
 
-# ELIMINAR ENTRADA PER DELETE
-
-# url
-http://localhost/api/entrada
-
-# estructura
+## estructura entrada
 {
 "ref": "323161395451321"
 }
 
-# ELIMINAR COMPRA PER DELETE
-
-# url
-http://localhost/api/compra
-
-# estructura
+## estructura compra
 {
 "id": 1
 }
 
-# ACTUALITZAR USUARI PER UPDATE
+# ###################
+# ACTUALITZAR PER UPDATE
+# ###################
 
-# url
-http://localhost/api/usuari
-
-# estructura
+## estructura usuari
 {
 "id": 1,
 "nom": "HATIM2",
@@ -148,12 +172,7 @@ http://localhost/api/usuari
 "telefon": 123123123,
 }
 
-# ACTUALITZAR LOCALITZACIO PER UPDATE
-
-# url
-http://localhost/api/localitzacio
-
-# estructura
+## estructura localitzacio
 {
 "id": 1,
 "nom": "Paris",
@@ -162,12 +181,7 @@ http://localhost/api/localitzacio
 "capacitat": 200,
 }
 
-# ACTUALITZAR ESPECTACLE PER UPDATE
-
-# url
-http://localhost/api/espectacle
-
-# estructura
+## estructura espectacle
 {
 "id": 1,
 "nom": "Long. Live. A$AP",
@@ -177,12 +191,7 @@ http://localhost/api/espectacle
 "localitzacio": "Paris"
 }
 
-# ACTUALITZAR SEIENT PER UPDATE
-
-# url
-http://localhost/api/seient
-
-# estructura
+## estructura seient
 {
 "id": 1,
 "fila": "1",
@@ -191,12 +200,7 @@ http://localhost/api/seient
 "localitzacio": "Paris"
 }
 
-# ACTUALITZAR ENTRADA PER UPDATE
-
-# url
-http://localhost/api/entrada
-
-# estructura no he puesto compra_id asi lo dejo que solo se cambie al comprar
+## estructura entrada, no he puesto compra_id asi lo dejo que solo se cambie al comprar
 {
 "id": 1,
 "ref": "987698769876987",
@@ -206,12 +210,7 @@ http://localhost/api/entrada
 "seient_id": 1
 }
 
-# ACTUALITZAR COMPRA PER UPDATE
-
-# url
-http://localhost/api/compra
-
-# estructura
+## estructura compra
 {
 "id": 1,
 "dataCompra": "2025-5-23 20:00:00",
