@@ -1,0 +1,18 @@
+{
+	"name" : "hdebboun/doctrine",
+	"description" : "Exercici Microserveis",
+	"type" : "project",
+    "require": {
+        "doctrine/orm": "^3",
+        "doctrine/dbal": "^4",
+        "symfony/cache": "^7",
+        "mpdf/mpdf": "8.2.5",
+        "mpdf/qrcode": "^1.2",
+        "ext-simplexml": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hatim\\Entradas\\": "src"
+        }
+    }
+}
