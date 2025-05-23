@@ -33,25 +33,33 @@ class SeientModel {
         $em->flush();
     }
 
-    public static function actualitza($ON_Seient) {
+    public static function actualitza($ON_Seient)
+    {
         global $em;
 
         $DB_Seient = $em->getRepository(Seient::class)->find($ON_Seient->__get("id"));
         if ($DB_Seient === null) {
             throw new Exception("Id de seient inexistent.", 404);
         }
-        else if ($ON_Seient->__get("localitzacio") === null) {
-            throw new Exception("Nom de localitzacio inexistent.", 404);
+
+        $loc = $ON_Seient->__get("localitzacio");
+        if ($loc === null) {
+            throw new Exception("Nom de localització inexistent.", 404);
         }
-        else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()
-            == $ON_Seient->__get("localitzacio")) {
-            throw new Exception("Numero de seient en us.", 226);
+
+        $duplicat = $em->getRepository(Seient::class)->findOneBy([
+            'numero' => $ON_Seient->__get("numero"),
+            'localitzacio' => $loc
+        ]);
+
+        if ($duplicat !== null && $duplicat->getId() !== $DB_Seient->getId()) {
+            throw new Exception("Número de seient en ús.", 409);
         }
 
         $DB_Seient->setFila($ON_Seient->__get("fila"));
         $DB_Seient->setNumero($ON_Seient->__get("numero"));
         $DB_Seient->setTipus($ON_Seient->__get("tipus"));
-        $DB_Seient->setLocalitzacio($ON_Seient->__get("localitzacio"));
+        $DB_Seient->setLocalitzacio($loc);
 
         $em->persist($DB_Seient);
         $em->flush();
