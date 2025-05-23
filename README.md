@@ -14,15 +14,14 @@ GRANT ALL PRIVILEGES ON `E01\_DebbounHatim\_Entrada`.* TO 'usr_generic'@'localho
 
 # ###################
 ## PETICIO PDF
-# ###################
-
 http://localhost/?ref=123456789123456
+# ###################
 
 # ###################
 ## PETICIO DATA
+http://localhost/?data=2025-05-19
 # ###################
 
-http://localhost/?data=2025-05-19
 
 # ###################
 # URL CRUD
