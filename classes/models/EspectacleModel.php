@@ -5,20 +5,25 @@ use Hatim\Entradas\Entity\Espectacle;
 use Hatim\Entradas\Entity\Localitzacio;
 
 class EspectacleModel {
-
-    public static function crea($espectacle) {
+    public static function crea($ON_Espectacle) {
         global $em;
+        if ($em->getRepository(Espectacle::class)->findBy(['nom' => $ON_Espectacle->__get("nom")])) {
+            throw new Exception("Nom d'espectacle ja existeix.");
+        }
+        else if ($ON_Espectacle->__get("localitzacio") === null) {
+            throw new Exception("Nom de localitzacio inexistent.");
+        }
+
         $es = new Espectacle();
-        $es->setNom($espectacle->__get("nom"));
-        $es->setPoster($espectacle->__get("poster"));
-        $es->setHoraInici(new DateTime($espectacle->__get("horaInici")));
-        $es->setHoraFinal(new DateTime($espectacle->__get("horaFinal")));
-        $es->setLocalitzacio($espectacle->__get("localitzacio"));
+        $es->setNom($ON_Espectacle->__get("nom"));
+        $es->setPoster($ON_Espectacle->__get("poster"));
+        $es->setHoraInici(new DateTime($ON_Espectacle->__get("horaInici")));
+        $es->setHoraFinal(new DateTime($ON_Espectacle->__get("horaFinal")));
+        $es->setLocalitzacio($ON_Espectacle->__get("localitzacio"));
 
         $em->persist($es);
         $em->flush();
     }
-
     public static function actualitza($ON_Espectacle) {
         global $em;
 

@@ -37,14 +37,15 @@ class EspectacleController
 
     public static function crea($data): void
     {
-
-        if (LocalitzacioModel::findByNom($data["localitzacio"])) {
-            $localitzacio = LocalitzacioModel::findByNom($data["localitzacio"]);
-            $on = new ON_Espectacle($data["nom"], $data["poster"], $data["horainici"], $data["horafinal"], $localitzacio);
+        try {
+            $DB_Localitzacio = LocalitzacioModel::findByNom($data["localitzacio"]);;
+            $on = new ON_Espectacle($data["nom"], $data["poster"], $data["horainici"], $data["horafinal"], $DB_Localitzacio);
             EspectacleModel::crea($on);
-        } else {
-            http_response_code(404);
-            echo json_encode(['status' => 'Localitzacio inexistent']);
+            http_response_code(200);
+            echo json_encode(['Resposta' => 'Espectacle creat']);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode(['Error' => $e->getMessage()]);
         }
 
     }

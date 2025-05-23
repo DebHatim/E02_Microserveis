@@ -7,11 +7,17 @@ class EntradaModel {
     public static function crea($ON_Entrada) {
         global $em;
 
-        if ($ON_Entrada->__get("espectacle") === null) {
+        if ($em->getRepository(Entrada::class)->findOneBy(['ref' => $ON_Entrada->__get("ref")])) {
+            throw new Exception("Codi de referencia ja utilitzat.");
+        }
+        else if ($ON_Entrada->__get("espectacle") === null) {
             throw new Exception("Nom d'espectacle inexistent.");
         }
         else if ($ON_Entrada->__get("seient") === null) {
             throw new Exception("Id de seient inexistent.");
+        }
+        else if ($em->getRepository(Entrada::class)->findOneBy(['seient' => $ON_Entrada->__get("seient")])) {
+            throw new Exception("Seient ja utilitzat per una altra entrada.");
         }
 
         $en = new Entrada();

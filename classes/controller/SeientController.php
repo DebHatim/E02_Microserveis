@@ -38,7 +38,7 @@ class SeientController {
     public static function actualitza($data): void
     {
         try {
-            $DB_Localitzacio = LocalitzacioModel::find($data["localitzacio"]);
+            $DB_Localitzacio = LocalitzacioModel::findByNom($data["localitzacio"]);
             SeientModel::actualitza(new ON_Seient($data["numero"], $data["fila"], $DB_Localitzacio, $data["tipus"], $data["id"]));
             http_response_code(200);
             echo json_encode(['Resposta' => 'Seient actualitzat']);

@@ -1,0 +1,2 @@
+controlar network error code en crud de cada
+401 para el token

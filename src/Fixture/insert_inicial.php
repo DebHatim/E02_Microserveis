@@ -3,6 +3,7 @@
 namespace Hatim\Entradas\Fixture;
 
 use Doctrine\ORM\EntityManager;
+use Hatim\Entradas\Entity\Admin;
 use Hatim\Entradas\Entity\Compra;
 use Hatim\Entradas\Entity\Entrada;
 use Hatim\Entradas\Entity\Localitzacio;
@@ -14,6 +15,10 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../bootstrap.php';
 
 /* @var $em EntityManager */
+
+$admin = new Admin();
+$admin->setUsuari("admin");
+$admin->setPass("2025@Thos!");
 
 $senseLocalitzacio = new Localitzacio();
 $senseLocalitzacio->setNom("Sense Localitzacio");

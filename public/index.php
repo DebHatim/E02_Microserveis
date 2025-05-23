@@ -16,6 +16,10 @@ try {
     $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $path = trim(str_replace('/uf4/E02_Microserveis/public/', '', $uri), '/');
 
+    if (!TokenController::check($_SERVER['REQUEST_METHOD'], $path, "")) {
+        http_response_code(401);
+        exit;
+    }
     switch ($_SERVER['REQUEST_METHOD']) {
         case "GET":
             if (empty($path)) {
@@ -100,7 +104,28 @@ try {
         case "POST":
             $body = file_get_contents('php://input');
             $data = json_decode($body, true);
-            if ($path == "api/usuari") {
+            if ($path == "api/auth") {
+                if (!is_array($data) || !isset($data['user'], $data['pass'])) {
+                    http_response_code(400);
+                    echo json_encode(['Error' => 'Camps necessaris: user - pass']);
+                    exit;
+                }
+                $data["user"] = $sanititzador->sanitize($data["user"], 'string');
+
+                if (empty($data["user"]) || empty($data["pass"])) {
+                    http_response_code(400);
+                    echo json_encode(['Error' => 'Els camps no poden estar buits.']);
+                    exit;
+                }
+                else if (strlen($data["user"]) > 15) {
+                    http_response_code(400);
+                    echo json_encode(['Error' => 'Maxima longitud del nom usuari: 15']);
+                    exit;
+                }
+                TokenController::crea($data);
+                exit;
+            }
+            else if ($path == "api/usuari") {
                 if (!is_array($data) || !isset($data['nom'], $data['email'], $data['telefon'])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris: nom - email - telefon']);
@@ -114,6 +139,12 @@ try {
                     if (empty($data["nom"]) || empty($data["email"])) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Camps necessaris buits: nom - email']);
+                        exit;
+                    }
+                    else if (strlen($data["telefon"]) > 12) {
+                        http_response_code(400);
+                        echo json_encode(['error' => 'Telefon massa llarg']);
+                        exit;
                     }
                     else if (!$sanititzador->validateItem($data['email'], 'email') ||
                         !$sanititzador->validateItem($data['telefon'], 'phone')) {
@@ -123,6 +154,7 @@ try {
                     }
 
                     UsuariController::crea($data);
+                    exit;
                 }
             } else if ($path == "api/localitzacio") {
                 if (!is_array($data) || !isset($data['nom'], $data['direccio'], $data['ciutat'], $data['capacitat'])) {
@@ -139,6 +171,7 @@ try {
                     if (empty($data["nom"]) || empty($data["direccio"]) || empty($data["ciutat"]) || empty($data["capacitat"])) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Camps necessaris buits: nom - direccio - ciutat - capacitat']);
+                        exit;
                     }
                     else if (!$sanititzador->validateItem($data['nom'], 'words') ||
                         !$sanititzador->validateItem($data['direccio'], 'words') ||
@@ -150,6 +183,7 @@ try {
                     }
 
                     LocalitzacioController::crea($data);
+                    exit;
                 }
             } else if ($path == "api/espectacle") {
                 if (!is_array($data) || !isset($data['nom'], $data['poster'], $data['horainici'], $data['horafinal'], $data['localitzacio'])) {
@@ -166,9 +200,11 @@ try {
                     if (empty($data["nom"]) || empty($data["poster"]) || empty($data["horainici"]) || empty($data["horafinal"]) || empty($data["localitzacio"])) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Camps necessaris buits: nom - poster - horainici - horafinal - localitzacio']);
+                        exit;
                     }
 
                     EspectacleController::crea($data);
+                    exit;
                 }
             } else if ($path == "api/seient") {
                 if (!is_array($data) || !isset($data['numero'], $data['fila'], $data['tipus'], $data['localitzacio'])) {
@@ -185,9 +221,11 @@ try {
                     if (empty($data["numero"]) || empty($data["fila"]) || empty($data["tipus"]) || empty($data["localitzacio"])) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Camps necessaris buits: numero - fila - tipus - localitzacio']);
+                        exit;
                     }
 
                     SeientController::crea($data);
+                    exit;
                 }
             } else if ($path == "api/entrada") {
                 if (!is_array($data) || !isset($data['ref'], $data['preu'], $data['espectacle'], $data['seient_id'])) {
@@ -204,9 +242,11 @@ try {
                     if (empty($data["ref"]) || empty($data["preu"]) || empty($data["espectacle"]) || empty($data["seient_id"])) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Camps necessaris buits: ref - preu - espectacle - seient_id']);
+                        exit;
                     }
 
                     EntradaController::crea($data);
+                    exit;
                 }
             } else if ($path == "api/compra") {
                 if (!is_array($data) || !isset($data['usuari'], $data['metodepagament'], $data['ref'])) {
@@ -222,9 +262,11 @@ try {
                     if (empty($data["usuari"]) || empty($data["metodepagament"]) || empty($data["ref"])) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Camps necessaris buits: usuari - metodepagament - ref']);
+                        exit;
                     }
 
                     CompraController::crea($data);
+                    exit;
                 }
             }
 
@@ -246,14 +288,22 @@ try {
                 if (empty($data["id"]) || empty($data["nom"]) || empty($data["email"]) || empty($data["telefon"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id - nom - email - telefon']);
+                    exit;
                 }
-                else if (!$sanititzador->validateItem($data['telefon'], 'phone')) {
+                else if (strlen($data["telefon"]) > 12) {
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Telefon massa llarg']);
+                    exit;
+                }
+                else if (!$sanititzador->validateItem($data['email'], 'email') ||
+                    !$sanititzador->validateItem($data['telefon'], 'phone')) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Format incorrecte en el telefon.']);
                     exit;
                 }
 
                 UsuariController::actualitza($data);
+                exit;
             }
             else if ($path == "api/localitzacio") {
                 if (!is_array($data) || !isset($data['id'], $data['nom'], $data['direccio'], $data['ciutat'], $data['capacitat'])) {
@@ -270,9 +320,11 @@ try {
                 if (empty($data["id"]) || empty($data["nom"]) || empty($data["direccio"]) || empty($data["ciutat"]) || empty($data["capacitat"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id - nom - direccio - ciutat - capacitat']);
+                    exit;
                 }
 
                 LocalitzacioController::actualitza($data);
+                exit;
             }
             else if ($path == "api/espectacle") {
                 if (!is_array($data) || !isset($data['id'], $data['nom'], $data['poster'], $data['horaInici'],
@@ -289,9 +341,11 @@ try {
                     empty($data["horaFinal"]) || empty($data["localitzacio"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id - nom - poster - horaInici - horaFinal - localitzacio']);
+                    exit;
                 }
 
                 EspectacleController::actualitza($data);
+                exit;
             }
             else if ($path == "api/seient") {
                 if (!is_array($data) || !isset($data['id'], $data['fila'], $data['numero'], $data['tipus'], $data['localitzacio'])) {
@@ -308,9 +362,11 @@ try {
                 if (empty($data["id"]) || empty($data["fila"]) || empty($data["numero"]) || empty($data["tipus"]) || empty($data["localitzacio"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id - fila - numero - tipus - localitzacio']);
+                    exit;
                 }
 
                 SeientController::actualitza($data);
+                exit;
             }
             else if ($path == "api/entrada") {
                 if (!is_array($data) || !isset($data['id'], $data['ref'], $data['estat'], $data['preu'], $data['espectacle'], $data['seient_id'])) {
@@ -329,9 +385,11 @@ try {
                     empty($data["espectacle"]) || empty($data["seient_id"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id - ref - estat - preu - espectacle - seient_id']);
+                    exit;
                 }
 
                 EntradaController::actualitza($data);
+                exit;
             }
             else if ($path == "api/compra") {
                 if (!is_array($data) || !isset($data['id'], $data['dataCompra'], $data['metodepagament'], $data['usuari'])) {
@@ -346,9 +404,11 @@ try {
                 if (empty($data["id"]) || empty($data["dataCompra"]) || empty($data["metodepagament"]) || empty($data["usuari"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id - dataCompra - metodepagament - usuari']);
+                    exit;
                 }
 
                 CompraController::actualitza($data);
+                exit;
             }
             break;
         case "DELETE":
@@ -365,9 +425,11 @@ try {
                 if (empty($data["email"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: email']);
+                    exit;
                 }
 
                 UsuariController::elimina($data);
+                exit;
             } else if ($path == "api/localitzacio") {
                 if (!is_array($data) || !isset($data['nom'])) {
                     http_response_code(400);
@@ -379,9 +441,11 @@ try {
                 if (empty($data["nom"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: nom']);
+                    exit;
                 }
 
                 LocalitzacioController::elimina($data);
+                exit;
             } else if ($path == "api/espectacle") {
                 if (!is_array($data) || !isset($data['nom'])) {
                     http_response_code(400);
@@ -393,9 +457,11 @@ try {
                 if (empty($data["nom"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: nom']);
+                    exit;
                 }
 
                 EspectacleController::elimina($data);
+                exit;
             } else if ($path == "api/seient") {
                 if (!is_array($data) || !isset($data['id'])) {
                     http_response_code(400);
@@ -407,9 +473,11 @@ try {
                 if (empty($data["id"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id']);
+                    exit;
                 }
 
                 SeientController::elimina($data);
+                exit;
             } else if ($path == "api/entrada") {
                 if (!is_array($data) || !isset($data['ref'])) {
                     http_response_code(400);
@@ -421,9 +489,11 @@ try {
                 if (empty($data["ref"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: ref']);
+                    exit;
                 }
 
                 EntradaController::elimina($data);
+                exit;
             } else if ($path == "api/compra") {
                 if (!is_array($data) || !isset($data['id'])) {
                     http_response_code(400);
@@ -435,9 +505,11 @@ try {
                 if (empty($data["id"])) {
                     http_response_code(400);
                     echo json_encode(['status' => 'Camps necessaris buits: id']);
+                    exit;
                 }
 
                 CompraController::elimina($data);
+                exit;
             }
 
             break;

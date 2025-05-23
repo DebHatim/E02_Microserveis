@@ -15,22 +15,31 @@ class UsuariModel {
         $user = new Usuari();
         $user->setNom($usuari->__get("nom"));
         $user->setEmail($usuari->__get("email"));
+        if ($usuari->__get("telefon")) {
+            $user->setTelefon($usuari->__get("telefon"));
+        }
         $em->persist($user);
         $em->flush($user);
     }
 
-    public static function actualitza($usuari) {
+    public static function actualitza($ON_Usuari) {
         global $em;
 
-        $userDB = $em->getRepository(Usuari::class)->find($usuari->__get("id"));
+        $userDB = $em->getRepository(Usuari::class)->find($ON_Usuari->__get("id"));
         if ($userDB === null) {
             throw new Exception("Id d'usuari no trobat.");
         }
+        else if ($em->getRepository(Usuari::class)->findOneBy(['email' => $ON_Usuari->__get("email")])) {
+            throw new Exception("Email ja utilizat.");
+        }
+        else if ($em->getRepository(Usuari::class)->findOneBy(['telefon' => $ON_Usuari->__get("telefon")])) {
+            throw new Exception("Numero de telefon ja utilizat.");
+        }
 
-        $userDB->setNom($usuari->__get("nom"));
-        $userDB->setEmail($usuari->__get("email"));
-        if ($usuari->__get("telefon")) {
-            $userDB->setTelefon($usuari->__get("telefon"));
+        $userDB->setNom($ON_Usuari->__get("nom"));
+        $userDB->setEmail($ON_Usuari->__get("email"));
+        if ($ON_Usuari->__get("telefon")) {
+            $userDB->setTelefon($ON_Usuari->__get("telefon"));
         }
 
         $em->persist($userDB);

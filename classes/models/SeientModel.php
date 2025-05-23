@@ -1,7 +1,6 @@
 <?php
 
 use Hatim\Entradas\Entity\Entrada;
-use Hatim\Entradas\Entity\Localitzacio;
 use Hatim\Entradas\Entity\Seient;
 
 class SeientModel {
@@ -11,6 +10,10 @@ class SeientModel {
 
         if ($ON_Seient->__get("localitzacio") === null) {
             throw new Exception("Nom de localitzacio inexistent.");
+        }
+        else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()
+            == $ON_Seient->__get("localitzacio")) {
+            throw new Exception("Numero de seient en us.");
         }
 
         $se = new Seient();
@@ -32,6 +35,10 @@ class SeientModel {
         }
         else if ($ON_Seient->__get("localitzacio") === null) {
             throw new Exception("Nom de localitzacio inexistent.");
+        }
+        else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()
+            == $ON_Seient->__get("localitzacio")) {
+            throw new Exception("Numero de seient en us.");
         }
 
         $DB_Seient->setFila($ON_Seient->__get("fila"));

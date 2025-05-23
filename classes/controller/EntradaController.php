@@ -50,7 +50,7 @@ class EntradaController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada creada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code(400);
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
