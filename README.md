@@ -112,8 +112,7 @@ http://localhost/api/compra/1
 "ref": "123412341234123",
 "preu": 90.00,
 "espectacle": "CHROMAKOPIA",
-"seient_id": 4,
-"estat": "Disponible"
+"seient_id": 4
 }
 
 ### estructura compra

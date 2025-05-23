@@ -19,7 +19,7 @@ class EntradaModel {
         $en->setPreu($ON_Entrada->__get("preu"));
         $en->setEspectacle($ON_Entrada->__get("espectacle"));
         $en->setSeient($ON_Entrada->__get("seient"));
-        $en->setEstat($ON_Entrada->__get("estat"));
+        $en->setEstat("Disponible");
 
         $em->persist($en);
         $em->flush();

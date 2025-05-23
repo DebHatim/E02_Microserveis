@@ -25,7 +25,7 @@ class SeientController {
     public static function crea($data): void
     {
         try {
-            $localitzacio = LocalitzacioModel::find($data["localitzacio"]);
+            $localitzacio = LocalitzacioModel::findByNom($data["localitzacio"]);
             SeientModel::crea(new ON_Seient($data["numero"], $data["fila"], $localitzacio, $data["tipus"]));
             http_response_code(200);
             echo json_encode(['Resposta' => 'Seient creat']);

@@ -45,8 +45,8 @@ class EntradaController {
     {
         try {
             $DB_Espectacle = EspectacleModel::findByNom($data["espectacle"]);
-            $DB_Seient = SeientModel::find($data["seient"]);
-            EntradaModel::crea(new ON_Entrada($data["ref"], $data["preu"], $DB_Espectacle, $DB_Seient, $data["estat"]));
+            $DB_Seient = SeientModel::find($data["seient_id"]);
+            EntradaModel::crea(new ON_Entrada($data["ref"], $data["preu"], $DB_Espectacle, $DB_Seient));
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada creada']);
         } catch (Exception $e) {

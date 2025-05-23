@@ -111,7 +111,11 @@ try {
                     $data["email"] = $sanititzador->sanitize($data["email"], 'email');
                     $data["telefon"] = $sanititzador->sanitize($data["telefon"], 'string');
 
-                    if (!$sanititzador->validateItem($data['email'], 'email') ||
+                    if (empty($data["nom"]) || empty($data["email"])) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'Camps necessaris buits: nom - email']);
+                    }
+                    else if (!$sanititzador->validateItem($data['email'], 'email') ||
                         !$sanititzador->validateItem($data['telefon'], 'phone')) {
                         http_response_code(400);
                         echo json_encode(['status' => 'Format incorrecte en algun camp.']);
@@ -132,7 +136,11 @@ try {
                     $data["ciutat"] = $sanititzador->sanitize($data["ciutat"], 'string');
                     $data["capacitat"] = $sanititzador->sanitize($data["capacitat"], 'int');
 
-                    if (!$sanititzador->validateItem($data['nom'], 'words') ||
+                    if (empty($data["nom"]) || empty($data["direccio"]) || empty($data["ciutat"]) || empty($data["capacitat"])) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'Camps necessaris buits: nom - direccio - ciutat - capacitat']);
+                    }
+                    else if (!$sanititzador->validateItem($data['nom'], 'words') ||
                         !$sanititzador->validateItem($data['direccio'], 'words') ||
                         !$sanititzador->validateItem($data['ciutat'], 'words') ||
                         !$sanititzador->validateItem($data['capacitat'], 'number')) {
@@ -155,6 +163,11 @@ try {
                     // NO SE COMO SANITIZAR HORA INICI Y HORA FINAL
                     $data["localitzacio"] = $sanititzador->sanitize($data["localitzacio"], 'string');
 
+                    if (empty($data["nom"]) || empty($data["poster"]) || empty($data["horainici"]) || empty($data["horafinal"]) || empty($data["localitzacio"])) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'Camps necessaris buits: nom - poster - horainici - horafinal - localitzacio']);
+                    }
+
                     EspectacleController::crea($data);
                 }
             } else if ($path == "api/seient") {
@@ -169,19 +182,29 @@ try {
                     $data["tipus"] = $sanititzador->sanitize($data["tipus"], 'string');
                     $data["localitzacio"] = $sanititzador->sanitize($data["localitzacio"], 'string');
 
+                    if (empty($data["numero"]) || empty($data["fila"]) || empty($data["tipus"]) || empty($data["localitzacio"])) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'Camps necessaris buits: numero - fila - tipus - localitzacio']);
+                    }
+
                     SeientController::crea($data);
                 }
             } else if ($path == "api/entrada") {
-                if (!is_array($data) || !isset($data['ref'], $data['preu'], $data['espectacle'], $data['seient_id'], $data['estat'])) {
+                if (!is_array($data) || !isset($data['ref'], $data['preu'], $data['espectacle'], $data['seient_id'])) {
                     http_response_code(400);
-                    echo json_encode(['status' => 'Camps necessaris: preu - espectacle - seient_id - estat']);
+                    echo json_encode(['status' => 'Camps necessaris: ref - preu - espectacle - seient_id']);
                     exit;
                 }
                 else {
+                    $data["ref"] = $sanititzador->sanitize($data["preu"], 'string');
                     $data["preu"] = $sanititzador->sanitize($data["preu"], 'float');
                     $data["espectacle"] = $sanititzador->sanitize($data["espectacle"], 'string');
                     $data["seient_id"] = $sanititzador->sanitize($data["seient_id"], 'int');
-                    $data["estat"] = $sanititzador->sanitize($data["estat"], 'string');
+
+                    if (empty($data["ref"]) || empty($data["preu"]) || empty($data["espectacle"]) || empty($data["seient_id"])) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'Camps necessaris buits: ref - preu - espectacle - seient_id']);
+                    }
 
                     EntradaController::crea($data);
                 }
@@ -195,6 +218,11 @@ try {
                     $data["usuari"] = $sanititzador->sanitize($data["usuari"], 'string');
                     $data["metodepagament"] = $sanititzador->sanitize($data["metodepagament"], 'string');
                     $data["ref"] = $sanititzador->sanitize($data["ref"], 'string');
+
+                    if (empty($data["usuari"]) || empty($data["metodepagament"]) || empty($data["ref"])) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'Camps necessaris buits: usuari - metodepagament - ref']);
+                    }
 
                     CompraController::crea($data);
                 }
