@@ -1,11 +1,9 @@
 # Arrancar projecte:
-1. Crear base de dades E01_DebbounHatim_Entrada.
+1. Crear base de dades E01_DebbounHatim_Entrada, usuari usr_generic amb contrassenya 2025@Thos i 
+donarli permisos per la base de dades
 
 CREATE DATABASE if not exists E01_DebbounHatim_Entrada;
-
-2. Crear usuari usr_generic amb contrassenya 2025@Thos i donarli permisos per la base de dades
-
-CREATE USER 'usr_generic'@'localhost' IDENTIFIED BY '2025@Thos';
+-- CREATE USER 'usr_generic'@'localhost' IDENTIFIED BY '2025@Thos';
 GRANT ALL PRIVILEGES ON `E01\_DebbounHatim\_Entrada`.* TO 'usr_generic'@'localhost';
 
 3. A la terminal, executar: php bin/doctrine.php orm:schema-tool:create
@@ -157,7 +155,7 @@ http://localhost/api/compra/1
 }
 
 # ###################
-# ACTUALITZAR PER UPDATE
+# ACTUALITZAR PER PUT
 # ###################
 
 ### estructura usuari
