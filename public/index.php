@@ -13,8 +13,9 @@ Autoload::load();
 
 try {
     $sanititzador = new Controller();
-    $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $path = trim(str_replace('/uf4/E02_Microserveis/public/', '', $uri), '/');
+    $scriptDir = str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME']));
+    $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = trim( substr($requestUri, strlen($scriptDir)), '/' );
 
     try {
         TokenController::check($_SERVER['REQUEST_METHOD'], $path);
