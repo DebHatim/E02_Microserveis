@@ -75,13 +75,13 @@ http://localhost/api/compra/1
 # CREAR PER POST
 # ###################
 
-## estructura usuari
+### estructura usuari
 {
 "nom": "jaime",
 "email": "jaime@gmail.com"
 }
 
-## estructura localitzacio
+### estructura localitzacio
 {
 "nom": "Lloc",
 "direccio": "Omplir direccio",
@@ -89,7 +89,7 @@ http://localhost/api/compra/1
 "capacitat": 300
 }
 
-## estructura espectacle
+### estructura espectacle
 {
 "nom": "NOM EXEMPLE",
 "poster": "https://cdn-p.smehost.net/sites/a8928da38df6414aae98564041b07ae0/wp-content/uploads/2024/10/image-31.png",
@@ -98,7 +98,7 @@ http://localhost/api/compra/1
 "localitzacio": "Lloc"
 }
 
-## estructura seient
+### estructura seient
 {
 "numero": 4,
 "fila": 1,
@@ -106,7 +106,7 @@ http://localhost/api/compra/1
 "localitzacio": "Lloc"
 }
 
-## estructura entrada
+### estructura entrada
 {
 "ref": "123412341234123",
 "preu": 90.00,
@@ -115,7 +115,7 @@ http://localhost/api/compra/1
 "estat": "Disponible"
 }
 
-## estructura compra
+### estructura compra
 {
 "usuari": "jaime.com",
 "metodepagament": "Yen",
@@ -126,32 +126,32 @@ http://localhost/api/compra/1
 # ELIMINAR PER DELETE
 # ###################
 
-## estructura usuari
+### estructura usuari
 {
 "email": "jaime@gmail.com"
 }
 
-## estructura localitzacio
+### estructura localitzacio
 {
 "nom": "Mercadona"
 }
 
-## estructura espectacle
+### estructura espectacle
 {
 "nom": "The Ruby Experience"
 }
 
-## estructura seient
+### estructura seient
 {
 "id": 2
 }
 
-## estructura entrada
+### estructura entrada
 {
 "ref": "323161395451321"
 }
 
-## estructura compra
+### estructura compra
 {
 "id": 1
 }
@@ -160,7 +160,7 @@ http://localhost/api/compra/1
 # ACTUALITZAR PER UPDATE
 # ###################
 
-## estructura usuari
+### estructura usuari
 {
 "id": 1,
 "nom": "HATIM2",
@@ -168,7 +168,7 @@ http://localhost/api/compra/1
 "telefon": 123123123,
 }
 
-## estructura localitzacio
+### estructura localitzacio
 {
 "id": 1,
 "nom": "Paris",
@@ -177,7 +177,7 @@ http://localhost/api/compra/1
 "capacitat": 200,
 }
 
-## estructura espectacle
+### estructura espectacle
 {
 "id": 1,
 "nom": "Long. Live. A$AP",
@@ -187,7 +187,7 @@ http://localhost/api/compra/1
 "localitzacio": "Paris"
 }
 
-## estructura seient
+### estructura seient
 {
 "id": 1,
 "fila": "1",
@@ -196,7 +196,7 @@ http://localhost/api/compra/1
 "localitzacio": "Paris"
 }
 
-## estructura entrada, no he puesto compra_id asi lo dejo que solo se cambie al comprar
+### estructura entrada, no he puesto compra_id asi lo dejo que solo se cambie al comprar
 {
 "id": 1,
 "ref": "987698769876987",
@@ -206,7 +206,7 @@ http://localhost/api/compra/1
 "seient_id": 1
 }
 
-## estructura compra
+### estructura compra
 {
 "id": 1,
 "dataCompra": "2025-5-23 20:00:00",
