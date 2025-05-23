@@ -8,7 +8,8 @@ class SeientModel {
     public static function crea($ON_Seient) {
         global $em;
 
-        if ($ON_Seient->__get("localitzacio") === null) {
+        $DB_Localitzacio = $ON_Seient->__get("localitzacio");
+        if ($DB_Localitzacio === null) {
             throw new Exception("Nom de localitzacio inexistent.", 404);
         }
         else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()

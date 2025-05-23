@@ -100,7 +100,6 @@ try {
                         break;
                     default:
                         http_response_code(400);
-                        echo "Error. Sense parametres.";
                         exit;
                 }
             }
@@ -273,6 +272,10 @@ try {
                     exit;
                 }
             }
+            else {
+                http_response_code(400);
+                exit;
+            }
 
             break;
         case "PUT":
@@ -414,6 +417,10 @@ try {
                 CompraController::actualitza($data);
                 exit;
             }
+            else {
+                http_response_code(400);
+                exit;
+            }
             break;
         case "DELETE":
             $body = file_get_contents('php://input');
@@ -513,6 +520,10 @@ try {
                 }
 
                 CompraController::elimina($data);
+                exit;
+            }
+            else {
+                http_response_code(400);
                 exit;
             }
 

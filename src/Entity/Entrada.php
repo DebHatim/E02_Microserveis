@@ -16,7 +16,7 @@ class Entrada implements \JSONSerializable {
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 15, unique: true)]
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
     private ?string $ref = null;
     
     #[ORM\ManyToOne(targetEntity: Espectacle::class, inversedBy: 'entrades')]
