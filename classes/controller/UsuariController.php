@@ -25,7 +25,7 @@ class UsuariController {
     public static function crea($data): void
     {
         try {
-            UsuariModel::crea(new ON_Usuari($data["email"], $data["nom"]));
+            UsuariModel::crea(new ON_Usuari($data["email"], $data["nom"], $data["telefon"]));
             http_response_code(200);
             echo json_encode(['Resposta' => 'Usuari creat']);
         } catch (Exception $e) {

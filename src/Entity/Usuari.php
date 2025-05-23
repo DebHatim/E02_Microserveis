@@ -23,8 +23,8 @@ class Usuari implements \JSONSerializable {
     #[ORM\Column(type: 'string', length:100, unique: true)]
     private string $email;
 
-    #[ORM\Column(type: 'integer', length: 9, nullable: true)]
-    private int $telefon;
+    #[ORM\Column(type: 'string', length: 12, nullable: true)]
+    private string $telefon;
 
     #[ORM\Column(type: 'date')]
     private DateTime $dataCreacio;
@@ -36,7 +36,6 @@ class Usuari implements \JSONSerializable {
         $this->compres = new ArrayCollection();
         $this->dataCreacio = new DateTime();
     }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -61,27 +60,24 @@ class Usuari implements \JSONSerializable {
     {
         return $this->email;
     }
-
     public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function getTelefon(): int
+    public function getTelefon(): string
     {
         return $this->telefon;
     }
 
-    public function setTelefon(int $telefon): void
+    public function setTelefon(string $telefon): void
     {
         $this->telefon = $telefon;
     }
-
     public function getDataCreacio(): DateTime
     {
         return $this->dataCreacio;
     }
-
     public function setDataCreacio(DateTime $dataCreacio): void
     {
         $this->dataCreacio = $dataCreacio;
@@ -92,11 +88,10 @@ class Usuari implements \JSONSerializable {
         return $this->compres;
     }
 
-    public function setCompres(Collection $compres): void
+    public function addCompra(Compra $compra): void
     {
-        $this->compres = $compres;
+        $this->compres->add($compra);
     }
-
     public function jsonSerialize() : array
     {
         return [
@@ -105,6 +100,7 @@ class Usuari implements \JSONSerializable {
             'email'       => $this->email,
             'telefon'     => $this->telefon ?? null,
             'dataCreacio' => $this->dataCreacio->format('Y-m-d'),
+            'compres'      => array_map(static fn(Compra $c) => $c->jsonSerialize(), $this->compres->toArray()),
         ];
     }
 

@@ -5,32 +5,46 @@ use Hatim\Entradas\Entity\Entrada;
 
 class CompraModel {
 
-    public static function crea($compra) {
+    public static function crea($ON_Compra) {
         global $em;
+        $DB_Usuari = $ON_Compra->__get("usuari");
+        if ($DB_Usuari === null) {
+            throw new Exception("Correu d'usuari inexistent.");
+        }
+        else if ($ON_Compra->__get("entrada") === null) {
+            throw new Exception("Codi de referencia inexistent.");
+        }
+        else if ($ON_Compra->__get("entrada")->getEstat() == "Venuda") {
+            throw new Exception("Aquesta entrada ja s,ha venuda.");
+        }
+        else {
+            $ON_Compra->__get("entrada")->setEstat("Venuda");
+        }
+
         $comp = new Compra();
-        $comp->setUsuari($compra->__get("usuari"));
-        $comp->setMetodePagament($compra->__get("metodepagament"));
-        $comp->addEntrada($compra->__get("entrada"));
+        $comp->setUsuari($ON_Compra->__get("usuari"));
+        $comp->setMetodePagament($ON_Compra->__get("metodepagament"));
+        $comp->addEntrada($ON_Compra->__get("entrada"));
 
         $em->persist($comp);
+        $DB_Usuari->addCompra($comp);
+        $em->persist($DB_Usuari);
         $em->flush();
     }
 
-    public static function actualitza($ON_Espectacle) {
+    public static function actualitza($ON_Compra) {
         global $em;
 
-        $DB_Espectacle = $em->getRepository(Espectacle::class)->find($ON_Espectacle->__get("id"));
-        if ($DB_Espectacle === null) {
-            throw new Exception("Id d'espectacle inexistent.");
+        $DB_Compra = $em->getRepository(Compra::class)->find($ON_Compra->__get("id"));
+        if ($DB_Compra === null) {
+            throw new Exception("Id de compra inexistent.");
         }
 
-        $DB_Espectacle->setNom($ON_Espectacle->__get("nom"));
-        $DB_Espectacle->setEmail($ON_Espectacle->__get("email"));
-        $DB_Espectacle->setEmail($ON_Espectacle->__get("email"));
-        $DB_Espectacle->setEmail($ON_Espectacle->__get("email"));
-        $DB_Espectacle->setEmail($ON_Espectacle->__get("email"));
+        $DB_Compra->setDataCompra($ON_Compra->__get("nom"));
+        $DB_Compra->setMetodePagament($ON_Compra->__get("email"));
+        $DB_Compra->setUsuari($ON_Compra->__get("email"));
 
-        $em->persist($DB_Espectacle);
+        $em->persist($DB_Compra);
         $em->flush();
     }
 

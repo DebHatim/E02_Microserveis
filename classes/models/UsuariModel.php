@@ -6,6 +6,12 @@ class UsuariModel {
 
     public static function crea($usuari) {
         global $em;
+
+        $userDB = $em->getRepository(Usuari::class)->findOneBy(['email' => $usuari->__get('email')]);
+        if ($userDB) {
+            throw new Exception("Email ja utilizat.");
+        }
+
         $user = new Usuari();
         $user->setNom($usuari->__get("nom"));
         $user->setEmail($usuari->__get("email"));

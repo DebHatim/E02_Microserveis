@@ -24,24 +24,15 @@ class CompraController {
 
     public static function crea($data): void
     {
-
-        if (UsuariModel::findOneByEmail($data["usuari"])) {
-            if (EntradaModel::findOneByRef($data["ref"])) {
-                $usuari = UsuariModel::findOneByEmail($data["usuari"]);
-                $entrada = EntradaModel::findOneByRef($data["ref"]);
-                $on = new ON_Compra(null, $usuari, $data["metodepagament"], $entrada);
-                CompraModel::crea($on);
-            }
-            else {
-                http_response_code(404);
-                echo json_encode(['status' => 'Id entrada inexistent']);
-            }
-        }
-        else {
+        try {
+            $DB_Usuari = UsuariModel::findOneByEmail($data["usuari"]);
+            $DB_Entrada = EntradaModel::findOneByRef($data["ref"]);
+            CompraModel::crea(new ON_Compra("", $DB_Usuari, "", $DB_Entrada));
+            echo json_encode(['Resposta' => 'Compra feta']);
+        } catch (Exception $e) {
             http_response_code(404);
-            echo json_encode(['status' => 'Email usuari inexistent']);
+            echo json_encode(['Error' => $e->getMessage()]);
         }
-
     }
 
     public static function actualitza($data): void

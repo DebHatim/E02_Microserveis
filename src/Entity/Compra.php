@@ -122,6 +122,7 @@ class Compra implements \JSONSerializable {
             'metodePagament'       => $this->metodePagament,
             'total'     => $this->total,
             'usuari' => $this->usuari->getEmail(),
+            'entrades'      => array_map(static fn(Entrada $e) => $e->getId(), $this->entrades->toArray()),
         ];
     }
 

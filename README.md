@@ -78,7 +78,8 @@ http://localhost/api/compra/1
 ### estructura usuari
 {
 "nom": "jaime",
-"email": "jaime@gmail.com"
+"email": "jaime@gmail.com",
+"telefon": "+34666111222"
 }
 
 ### estructura localitzacio
@@ -111,7 +112,7 @@ http://localhost/api/compra/1
 "ref": "123412341234123",
 "preu": 90.00,
 "espectacle": "CHROMAKOPIA",
-"seient": 4,
+"seient_id": 4,
 "estat": "Disponible"
 }
 
@@ -165,7 +166,7 @@ http://localhost/api/compra/1
 "id": 1,
 "nom": "HATIM2",
 "email": "hatim2@gmail.com",
-"telefon": 123123123,
+"telefon": "+34123123123",
 }
 
 ### estructura localitzacio
