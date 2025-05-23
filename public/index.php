@@ -31,7 +31,7 @@ try {
                     }
                 }
                 else {
-                    EspectacleController::mostra();
+                    EspectacleController::mostraData();
                     break;
                 }
             }
@@ -105,8 +105,10 @@ try {
                     echo json_encode(['status' => 'Camps necessaris: nom - email - telefon']);
                     exit;
                 }
+                else {
 
-                UsuariController::crea($data);
+                    UsuariController::crea($data);
+                }
             } else if ($path == "api/localitzacio") {
                 if (!is_array($data) || !isset($data['nom'], $data['direccio'], $data['ciutat'], $data['capacitat'])) {
                     http_response_code(400);
