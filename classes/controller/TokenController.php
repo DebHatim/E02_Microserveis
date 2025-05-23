@@ -5,7 +5,10 @@ class TokenController
 
     public static function check($metode, $path): void
     {
-        if (($metode == 'POST' && $path != "api/auth") ||
+        if ($metode === 'GET' && $path === '' && count($_GET) === 0) {
+            return;
+        }
+        if (($metode == 'POST' && $path == "api/auth") ||
             ($metode == 'GET' && $path == "api/espectacle") ||
             ($metode === 'GET' && $path === '' && (
                 (isset($_GET['ref']) && !isset($_GET['data'])) ||

@@ -30,7 +30,6 @@ try {
             if (empty($path)) {
                 if (count($_GET) == 0) {
                     http_response_code(400);
-                    echo "Error. Sense paràmetres.";
                     exit;
                 }
                 else if (count($_GET) == 1) {

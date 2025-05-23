@@ -10,6 +10,8 @@ GRANT ALL PRIVILEGES ON `E01\_DebbounHatim\_Entrada`.* TO 'usr_generic'@'localho
 
 4. Insertar per terminal: php src/Fixture/insert_inicial.php
 
+5. Configurar al servidor php o apache per tenir el documentRoot a public. ha de funcionar la peticio PDF d'abaix.
+
 # ###################
 ## PETICIO PDF
 http://localhost/?ref=123456789123456

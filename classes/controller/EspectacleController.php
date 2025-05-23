@@ -26,7 +26,7 @@ class EspectacleController
     {
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data ?? '')) {
             http_response_code(400);
-            echo "Format de data invàlid. (YYYY-MM-DD)";
+            echo json_encode(['Error' => 'Format de data invàlid. (YYYY-MM-DD)']);
             exit;
         }
 
