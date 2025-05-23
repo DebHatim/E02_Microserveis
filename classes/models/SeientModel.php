@@ -5,23 +5,29 @@ use Hatim\Entradas\Entity\Seient;
 
 class SeientModel {
 
-    public static function crea($ON_Seient) {
+    public static function crea($ON_Seient)
+    {
         global $em;
 
-        $DB_Localitzacio = $ON_Seient->__get("localitzacio");
-        if ($DB_Localitzacio === null) {
-            throw new Exception("Nom de localitzacio inexistent.", 404);
+        $loc = $ON_Seient->__get('localitzacio');
+        if ($loc === null) {
+            throw new Exception('Nom de localització inexistent.', 404);
         }
-        else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()
-            == $ON_Seient->__get("localitzacio")) {
-            throw new Exception("Numero de seient en us.", 226);
+
+        $existeix = $em->getRepository(Seient::class)->findOneBy([
+            'numero'        => $ON_Seient->__get('numero'),
+            'localitzacio'  => $loc
+        ]);
+
+        if ($existeix !== null) {
+            throw new Exception('Número de seient en ús.', 409);
         }
 
         $se = new Seient();
-        $se->setNumero($ON_Seient->__get("numero"));
-        $se->setFila($ON_Seient->__get("fila"));
-        $se->setTipus($ON_Seient->__get("tipus"));
-        $se->setLocalitzacio($ON_Seient->__get("localitzacio"));
+        $se->setNumero($ON_Seient->__get('numero'));
+        $se->setFila($ON_Seient->__get('fila'));
+        $se->setTipus($ON_Seient->__get('tipus'));
+        $se->setLocalitzacio($loc);
 
         $em->persist($se);
         $em->flush();
