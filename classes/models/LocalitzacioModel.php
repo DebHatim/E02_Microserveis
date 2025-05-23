@@ -21,7 +21,7 @@ class LocalitzacioModel {
 
         $DB_Localitzacio = $em->getRepository(Localitzacio::class)->find($ON_Localitzacio->__get("id"));
         if ($DB_Localitzacio === null) {
-            throw new Exception("Id de localitzacio no trobat.");
+            throw new Exception("Id de localitzacio no trobat.", 404);
         }
 
         $DB_Localitzacio->setNom($ON_Localitzacio->__get("nom"));
@@ -38,7 +38,7 @@ class LocalitzacioModel {
         $localitzacio = $em->getRepository(Localitzacio::class)->findOneBy(['nom' => $ONlocalitzacio->__get("nom")]);
 
         if ($localitzacio === null) {
-            throw new Exception("Localització no trobada.");
+            throw new Exception("Localització no trobada.", 404);
         }
 
         $espectacles = $em->getRepository(Espectacle::class)->findBy(['localitzacio' => $localitzacio]);

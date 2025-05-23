@@ -9,13 +9,13 @@ class CompraModel {
         global $em;
         $DB_Usuari = $ON_Compra->__get("usuari");
         if ($DB_Usuari === null) {
-            throw new Exception("Correu d'usuari inexistent.");
+            throw new Exception("Correu d'usuari inexistent.", 404);
         }
         else if ($ON_Compra->__get("entrada") === null) {
-            throw new Exception("Codi de referencia inexistent.");
+            throw new Exception("Codi de referencia inexistent.", 404);
         }
         else if ($ON_Compra->__get("entrada")->getEstat() == "Venuda") {
-            throw new Exception("Aquesta entrada ja s,ha venuda.");
+            throw new Exception("Aquesta entrada ja s,ha venuda.", 400);
         }
         else {
             $ON_Compra->__get("entrada")->setEstat("Venuda");
@@ -37,7 +37,7 @@ class CompraModel {
 
         $DB_Compra = $em->getRepository(Compra::class)->find($ON_Compra->__get("id"));
         if ($DB_Compra === null) {
-            throw new Exception("Id de compra inexistent.");
+            throw new Exception("Id de compra inexistent.", 404);
         }
 
         $DB_Compra->setDataCompra($ON_Compra->__get("nom"));
@@ -53,7 +53,7 @@ class CompraModel {
         $compra = $em->getRepository(Compra::class)->find($ONCompra->__get("id"));
 
         if ($compra === null) {
-            throw new Exception("Id de compra inexistent.");
+            throw new Exception("Id de compra inexistent.", 404);
         }
 
         if ($em->getRepository(Entrada::class)->findOneBy(["compra" => $compra])) {

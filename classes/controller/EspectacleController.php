@@ -8,7 +8,7 @@ class EspectacleController
         try {
             PeticioGETView::mostra(EspectacleModel::findAll());
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'han trobat espectacles."]);
         }
     }
@@ -18,7 +18,7 @@ class EspectacleController
         try {
             PeticioGETView::mostra(EspectacleModel::find($id));
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'ha trobat cap espectacle amb aquest id."]);
         }
     }
@@ -44,7 +44,7 @@ class EspectacleController
             http_response_code(200);
             echo json_encode(['Resposta' => 'Espectacle creat']);
         } catch (Exception $e) {
-            http_response_code(400);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
 
@@ -57,7 +57,7 @@ class EspectacleController
             http_response_code(200);
             echo json_encode(['Resposta' => 'Espectacle actualitzat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -70,7 +70,7 @@ class EspectacleController
             http_response_code(200);
             echo json_encode(['Resposta' => 'Espectacle eliminat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }

@@ -9,11 +9,11 @@ class SeientModel {
         global $em;
 
         if ($ON_Seient->__get("localitzacio") === null) {
-            throw new Exception("Nom de localitzacio inexistent.");
+            throw new Exception("Nom de localitzacio inexistent.", 404);
         }
         else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()
             == $ON_Seient->__get("localitzacio")) {
-            throw new Exception("Numero de seient en us.");
+            throw new Exception("Numero de seient en us.", 226);
         }
 
         $se = new Seient();
@@ -31,14 +31,14 @@ class SeientModel {
 
         $DB_Seient = $em->getRepository(Seient::class)->find($ON_Seient->__get("id"));
         if ($DB_Seient === null) {
-            throw new Exception("Id de seient inexistent.");
+            throw new Exception("Id de seient inexistent.", 404);
         }
         else if ($ON_Seient->__get("localitzacio") === null) {
-            throw new Exception("Nom de localitzacio inexistent.");
+            throw new Exception("Nom de localitzacio inexistent.", 404);
         }
         else if ($em->getRepository(Seient::class)->findOneBy(['numero' => $ON_Seient->__get("numero")])->getLocalitzacio()
             == $ON_Seient->__get("localitzacio")) {
-            throw new Exception("Numero de seient en us.");
+            throw new Exception("Numero de seient en us.", 226);
         }
 
         $DB_Seient->setFila($ON_Seient->__get("fila"));
@@ -53,13 +53,13 @@ class SeientModel {
     public static function elimina($ON_Seient) {
         global $em;
         if ($ON_Seient->__get("id") === null) {
-            throw new Exception("Id de seient inexistent.");
+            throw new Exception("Id de seient inexistent.", 404);
         }
         $DB_Seient = $em->getRepository(Seient::class)->find($ON_Seient->__get("id"));
         $DB_Entrada = $em->getRepository(Entrada::class)->findOneBy(['seient' => $DB_Seient]);
 
         if ($DB_Entrada) {
-            throw new Exception("Seient utilitzat per una entrada");
+            throw new Exception("Seient utilitzat per una entrada", 226);
         }
 
         $em->remove($DB_Seient);

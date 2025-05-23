@@ -7,7 +7,7 @@ class SeientController {
         try {
             PeticioGETView::mostra(SeientModel::findAll());
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'han trobat seients."]);
         }
     }
@@ -17,7 +17,7 @@ class SeientController {
         try {
             PeticioGETView::mostra(SeientModel::find($id));
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'ha trobat cap seient amb aquest id."]);
         }
     }
@@ -30,7 +30,7 @@ class SeientController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Seient creat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -43,7 +43,7 @@ class SeientController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Seient actualitzat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -55,7 +55,7 @@ class SeientController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Seient eliminat']);
         } catch (Exception $e) {
-            http_response_code(400);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
 

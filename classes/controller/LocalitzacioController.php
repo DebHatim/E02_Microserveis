@@ -7,7 +7,7 @@ class LocalitzacioController {
         try {
             PeticioGETView::mostra(LocalitzacioModel::findAll());
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'han trobat localitzacions."]);
         }
     }
@@ -17,7 +17,7 @@ class LocalitzacioController {
         try {
             PeticioGETView::mostra(LocalitzacioModel::find($id));
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'ha trobat cap localitzacio amb aquest id."]);
         }
     }
@@ -29,7 +29,7 @@ class LocalitzacioController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Localitzacio creada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -46,7 +46,7 @@ class LocalitzacioController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Localitzacio actualitzada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -58,7 +58,7 @@ class LocalitzacioController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Localitzacio eliminada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }

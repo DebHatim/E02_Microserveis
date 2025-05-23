@@ -16,8 +16,12 @@ try {
     $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $path = trim(str_replace('/uf4/E02_Microserveis/public/', '', $uri), '/');
 
-    if (!TokenController::check($_SERVER['REQUEST_METHOD'], $path, "")) {
-        http_response_code(401);
+    try {
+        TokenController::check($_SERVER['REQUEST_METHOD'], $path);
+    }
+    catch (Exception $e) {
+        http_response_code($e->getCode());
+        echo json_encode(['Error' => $e->getMessage()]);
         exit;
     }
     switch ($_SERVER['REQUEST_METHOD']) {
@@ -514,8 +518,7 @@ try {
 
             break;
         default:
-            http_response_code(400);
-            echo "Metode no suportat.";
+            http_response_code(405);
             exit;
     }
 } catch (Exception $e) {

@@ -8,10 +8,10 @@ class EspectacleModel {
     public static function crea($ON_Espectacle) {
         global $em;
         if ($em->getRepository(Espectacle::class)->findBy(['nom' => $ON_Espectacle->__get("nom")])) {
-            throw new Exception("Nom d'espectacle ja existeix.");
+            throw new Exception("Nom d'espectacle ja existeix.", 226);
         }
         else if ($ON_Espectacle->__get("localitzacio") === null) {
-            throw new Exception("Nom de localitzacio inexistent.");
+            throw new Exception("Nom de localitzacio inexistent.", 404);
         }
 
         $es = new Espectacle();
@@ -30,10 +30,10 @@ class EspectacleModel {
         $DB_Espectacle = $em->getRepository(Espectacle::class)->find($ON_Espectacle->__get("id"));
         $DB_Localitzacio = $em->getRepository(Localitzacio::class)->findOneBy(["nom" => $ON_Espectacle->__get("localitzacio")]);
         if ($DB_Espectacle === null) {
-            throw new Exception("Id d'espectacle inexistent.");
+            throw new Exception("Id d'espectacle inexistent.", 404);
         }
         else if ($DB_Localitzacio === null) {
-            throw new Exception("Nom de localitzacio inexistent.");
+            throw new Exception("Nom de localitzacio inexistent.", 404);
         }
 
         $DB_Espectacle->setNom($ON_Espectacle->__get("nom"));
@@ -51,7 +51,7 @@ class EspectacleModel {
         $espectacle = $em->getRepository(Espectacle::class)->findOneBy(['nom' => $ONespectacle->__get("nom")]);
 
         if ($espectacle === null) {
-            throw new Exception("Espectacle no trobat.");
+            throw new Exception("Espectacle no trobat.", 404);
         }
 
         $entrades = $em->getRepository(Entrada::class)->findBy(['espectacle' => $espectacle]);

@@ -5,11 +5,15 @@ class ON_Admin
 
     private $user;
     private $pass;
+    private $token;
+    private $expiracio;
 
-    public function __construct($user, $pass)
+    public function __construct($user, $pass, $token = null, $expiracio = null)
     {
         $this->user = $user;
         $this->pass = $pass;
+        $this->token = $token;
+        $this->expiracio = $expiracio;
     }
 
     public function __get($property)

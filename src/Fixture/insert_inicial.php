@@ -17,8 +17,9 @@ require __DIR__ . '/../bootstrap.php';
 /* @var $em EntityManager */
 
 $admin = new Admin();
-$admin->setUsuari("admin");
-$admin->setPass("2025@Thos!");
+$admin->setUser("admin");
+$admin->setPass("2025@Thos");
+$em->persist($admin);
 
 $senseLocalitzacio = new Localitzacio();
 $senseLocalitzacio->setNom("Sense Localitzacio");

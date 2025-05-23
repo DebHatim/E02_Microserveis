@@ -7,7 +7,7 @@ class CompraController {
         try {
             PeticioGETView::mostra(CompraModel::findAll());
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'han trobat compres."]);
         }
     }
@@ -17,7 +17,7 @@ class CompraController {
         try {
             PeticioGETView::mostra(CompraModel::find($id));
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'ha trobat cap compra amb aquest id."]);
         }
     }
@@ -30,7 +30,7 @@ class CompraController {
             CompraModel::crea(new ON_Compra("", $DB_Usuari, "", $DB_Entrada));
             echo json_encode(['Resposta' => 'Compra feta']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -42,7 +42,7 @@ class CompraController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Compra actualitzada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -54,7 +54,7 @@ class CompraController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Compra eliminada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }

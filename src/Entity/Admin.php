@@ -5,7 +5,7 @@ namespace Hatim\Entradas\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'Entrada')]
+#[ORM\Table(name: 'Admin')]
 
 class Admin {
 
@@ -15,13 +15,16 @@ class Admin {
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 15, unique: true)]
-    private string $usuari;
+    private string $user;
 
     #[ORM\Column(type: 'string', length: 15)]
     private string $pass;
 
-    #[ORM\Column(type: 'string', length: 100)]
-    private string $token;
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $token = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $expToken = null;
 
     public function getId(): ?int
     {
@@ -33,14 +36,14 @@ class Admin {
         $this->id = $id;
     }
 
-    public function getUsuari(): string
+    public function getUser(): string
     {
-        return $this->usuari;
+        return $this->user;
     }
 
-    public function setUsuari(string $usuari): void
+    public function setUser(string $user): void
     {
-        $this->usuari = $usuari;
+        $this->user = $user;
     }
 
     public function getPass(): string
@@ -61,6 +64,16 @@ class Admin {
     public function setToken(string $token): void
     {
         $this->token = $token;
+    }
+
+    public function getExpToken(): ?\DateTime
+    {
+        return $this->expToken;
+    }
+
+    public function setExpToken(?\DateTime $expToken): void
+    {
+        $this->expToken = $expToken;
     }
 
 }

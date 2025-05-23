@@ -18,6 +18,7 @@ http://localhost/?ref=123456789123456
 
 ## PETICIO DATA
 http://localhost/?data=2025-05-19
+## Nota: Si et surten els espectacles en xml, es possible error de navegador. Si poses la mateixa url a Postman es mostra un xml correcte.
 # ###################
 
 # URL CRUD
@@ -30,6 +31,7 @@ http://localhost/api/usuari o /api/localitzacio - /api/espectacle - /api/seient 
 "user": "admin",
 "pass": "2025@Thos"
 }
+## Nota: Només he permes acces sense token a GET d'espectacles, generacio pdf amb ref i mostrar espectacles per data.
 # ###################
 
 # ###################
@@ -197,8 +199,8 @@ http://localhost/api/compra/1
 ### estructura seient
 {
 "id": 1,
-"fila": "1",
-"numero": "5",
+"fila": 1,
+"numero": 5,
 "tipus": "VIP",
 "localitzacio": "Paris"
 }

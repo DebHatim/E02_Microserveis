@@ -8,16 +8,16 @@ class EntradaModel {
         global $em;
 
         if ($em->getRepository(Entrada::class)->findOneBy(['ref' => $ON_Entrada->__get("ref")])) {
-            throw new Exception("Codi de referencia ja utilitzat.");
+            throw new Exception("Codi de referencia ja utilitzat.", 226);
         }
         else if ($ON_Entrada->__get("espectacle") === null) {
-            throw new Exception("Nom d'espectacle inexistent.");
+            throw new Exception("Nom d'espectacle inexistent.", 404);
         }
         else if ($ON_Entrada->__get("seient") === null) {
-            throw new Exception("Id de seient inexistent.");
+            throw new Exception("Id de seient inexistent.", 404);
         }
         else if ($em->getRepository(Entrada::class)->findOneBy(['seient' => $ON_Entrada->__get("seient")])) {
-            throw new Exception("Seient ja utilitzat per una altra entrada.");
+            throw new Exception("Seient ja utilitzat per una altra entrada.", 226);
         }
 
         $en = new Entrada();
@@ -36,13 +36,13 @@ class EntradaModel {
 
         $DB_Entrada = $em->getRepository(Entrada::class)->find($ON_Entrada->__get("id"));
         if ($DB_Entrada === null) {
-            throw new Exception("Id d'entrada inexistent.");
+            throw new Exception("Id d'entrada inexistent.", 404);
         }
         else if ($ON_Entrada->__get("espectacle") === null) {
-            throw new Exception("Nom d'espectacle inexistent.");
+            throw new Exception("Nom d'espectacle inexistent.", 404);
         }
         else if ($ON_Entrada->__get("seient") === null) {
-            throw new Exception("Id de seient inexistent.");
+            throw new Exception("Id de seient inexistent.", 404);
         }
 
         $DB_Entrada->setRef($ON_Entrada->__get("ref"));
@@ -60,7 +60,7 @@ class EntradaModel {
         $entrada = $em->getRepository(Entrada::class)->findOneBy(["ref" => $ON_entrada->__get("ref")]);
 
         if ($entrada === null) {
-            throw new Exception("No s'ha trobat una entrada amb aquest codi de referencia.");
+            throw new Exception("No s'ha trobat una entrada amb aquest codi de referencia.", 404);
         }
         else {
             $em->remove($entrada);

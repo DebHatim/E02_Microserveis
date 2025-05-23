@@ -7,7 +7,7 @@ class EntradaController {
         try {
             PeticioGETView::mostra(EntradaModel::findAll());
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'han trobat entrades."]);
         }
     }
@@ -17,7 +17,7 @@ class EntradaController {
         try {
             PeticioGETView::mostra(EntradaModel::find($id));
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'ha trobat cap entrada amb aquest id."]);
         }
     }
@@ -30,9 +30,12 @@ class EntradaController {
                     http_response_code(404);
                     echo "Error: codi de referencia inexistent.";
                 }
+                else if ($DB_Entrada->getEstat() == "Disponible") {
+
+                }
                 EntradaView::mostraPDF($DB_Entrada);
             } catch (Exception $e) {
-                http_response_code(404);
+                http_response_code($e->getCode());
                 echo json_encode(['Error' => $e->getMessage()]);
             }
         }
@@ -50,7 +53,7 @@ class EntradaController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada creada']);
         } catch (Exception $e) {
-            http_response_code(400);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -64,7 +67,7 @@ class EntradaController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada actualitzada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -76,7 +79,7 @@ class EntradaController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Entrada eliminada']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }

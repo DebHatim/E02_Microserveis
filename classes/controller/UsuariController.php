@@ -17,7 +17,7 @@ class UsuariController {
         try {
             PeticioGETView::mostra(UsuariModel::find($id));
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => "No s'ha trobat cap usuari amb aquest id."]);
         }
     }
@@ -29,7 +29,7 @@ class UsuariController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Usuari creat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -41,7 +41,7 @@ class UsuariController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Usuari actualitzat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
@@ -53,7 +53,7 @@ class UsuariController {
             http_response_code(200);
             echo json_encode(['Resposta' => 'Usuari eliminat']);
         } catch (Exception $e) {
-            http_response_code(404);
+            http_response_code($e->getCode());
             echo json_encode(['Error' => $e->getMessage()]);
         }
     }
